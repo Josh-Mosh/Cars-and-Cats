@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>New Car</title>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	 <script type="text/javascript">
+	 var io=io.connect({localhost:7077});
+
+	 io.on('display_message', function (data){
+	 	$('#send_img').append('<p>' + data + '</p>');
+	 });
+
+	 $(document).ready(function(){
+	 	$('form#send_img').submit(function(){
+	 		var image = $('#image').val();
+	 		$('#send_img').append("<img src= '" + image + "'>");
+	 		$('#image').val('');
+	 		io.emit('send_img', image);
+	 		return false;
+	 	});
+	 });
+	 </script>
+</head>
+<body>
+	<h3>Add new Car</h3>
+	<form id='send_img'>
+		<input id='image' type='text' name='new_car' placeholder='New Car img url'>
+		<input style='display: block' type='submit' value='Submit'>
+	</form>
+</body>
+</html>
